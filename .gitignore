@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Audio/Video & intermediate processing files
+*.wav
+*.mp3
+*.mp4
+*.m4a
+*.flac
+*.aac
+*.mkv
+
+# Transcripts and summaries
+transcripts/
+summaries/
+*.txt
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# PyInstaller
+*.spec
+
+# ollama cache or whis
+
+recordings/
