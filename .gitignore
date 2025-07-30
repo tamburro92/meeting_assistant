@@ -26,7 +26,6 @@ env/
 # Transcripts and summaries
 transcripts/
 summaries/
-*.txt
 
 # Logs and temp files
 *.log

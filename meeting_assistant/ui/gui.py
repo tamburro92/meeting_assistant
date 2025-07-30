@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext
 import threading
 import os
-from recorder import start_recording, stop_recording, use_existing_audio
-from transcriber import transcribe_audio
-from summarizer import summarize_text
+from meeting_assistant.core.recorder import start_recording, stop_recording, use_existing_audio
+from meeting_assistant.core.transcriber import transcribe_audio
+from meeting_assistant.core.summarizer import summarize_text
 import ollama
 
 class MeetingApp:

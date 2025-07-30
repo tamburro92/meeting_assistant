@@ -1,5 +1,5 @@
 import tkinter as tk
-from gui import MeetingApp
+from meeting_assistant.ui.gui import MeetingApp
 
 if __name__ == "__main__":
     root = tk.Tk()

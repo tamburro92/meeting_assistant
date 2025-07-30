@@ -1,0 +1,9 @@
+sounddevice
+numpy
+scipy
+openai-whisper
+requests
+tk
+ffmpeg-python
+ollama
+
