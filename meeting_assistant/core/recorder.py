@@ -19,7 +19,6 @@ def audio_callback(indata, frames, time_info, status):
 def get_input_devices():
     devices = sd.query_devices()
     input_devices = {device['name']: i for i, device in enumerate(devices) if device['max_input_channels'] > 0}
-    print(input_devices)
     return input_devices
 
 def start_recording(device_id=None):
