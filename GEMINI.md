@@ -11,8 +11,8 @@ The application is architected with a clear separation of concerns, with distinc
 - **Language:** Python 3
 - **GUI:** Tkinter (standard Python library)
 - **Audio Processing:**
-  - `pyaudio`: For capturing audio from the microphone.
-  - `wave`: For saving the recorded audio into WAV file format.
+  - `sounddevice`: For capturing audio from the microphone.
+  - `numpy` / `scipy`: For processing and saving the recorded audio into WAV file format.
 - **Concurrency:** `threading` module is used to run the audio recording process in the background without freezing the GUI.
 
 ## File Breakdown
@@ -54,7 +54,7 @@ The application is architected with a clear separation of concerns, with distinc
 
 ## Setup and Usage
 
-To run the application, the user needs to have Python 3 installed along with the `pyaudio` library.
+To run the application, the user needs to have Python 3 installed along with the `sounddevice` library.
 
 1.  **Install Dependencies**:
     ```bash
