@@ -16,12 +16,18 @@ def audio_callback(indata, frames, time_info, status):
     if is_recording:
         recording.append(indata.copy())
 
-def start_recording():
+def get_input_devices():
+    devices = sd.query_devices()
+    input_devices = {device['name']: i for i, device in enumerate(devices) if device['max_input_channels'] > 0}
+    print(input_devices)
+    return input_devices
+
+def start_recording(device_id=None):
     global is_recording, recording
     recording = []
     is_recording = True
     os.makedirs("recordings", exist_ok=True)
-    stream = sd.InputStream(samplerate=SAMPLE_RATE, channels=CHANNELS, callback=audio_callback)
+    stream = sd.InputStream(samplerate=SAMPLE_RATE, channels=CHANNELS, callback=audio_callback, device=device_id)
     stream.start()
     return stream
 

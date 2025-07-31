@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext
 import threading
 import os
-from meeting_assistant.core.recorder import start_recording, stop_recording, use_existing_audio
+from meeting_assistant.core.recorder import start_recording, stop_recording, use_existing_audio, get_input_devices
 from meeting_assistant.core.transcriber import transcribe_audio
 from meeting_assistant.core.summarizer import summarize_text
 import ollama
@@ -16,6 +16,7 @@ class MeetingApp:
         self.recording_stream = None
         self.recording_state = None  # None, 'recording', 'paused'
         self.current_audio_file = None
+        self.input_devices = {}
 
         style = ttk.Style()
         style.theme_use("aqua")
@@ -34,6 +35,13 @@ class MeetingApp:
         # --- Bottoni ---
         self.upload_btn = ttk.Button(left_frame, text="📂 Carica File Audio/Video", command=self.load_audio_file)
         self.upload_btn.pack(pady=5, fill='x')
+
+        # --- Dispositivi di input ---
+        ttk.Label(left_frame, text="🎤 Dispositivo di Input:").pack(anchor="w", pady=(10, 0))
+        self.device_var = tk.StringVar()
+        self.device_dropdown = ttk.Combobox(left_frame, textvariable=self.device_var, state="readonly")
+        self.device_dropdown.pack(fill='x')
+        self.load_input_devices()
 
         self.record_btn = ttk.Button(left_frame, text="🎙️ Inizia Registrazione", command=self.toggle_recording)
         self.record_btn.pack(pady=5, fill='x')
@@ -98,7 +106,10 @@ class MeetingApp:
 
     def toggle_recording(self):
         if self.recording_state is None:
-            self.recording_stream = start_recording()
+            device_name = self.device_var.get()
+            device_id = self.input_devices.get(device_name)
+            
+            self.recording_stream = start_recording(device_id=device_id)
             self.recording_state = "recording"
             self.current_audio_file = None
             self.record_btn.config(text="⏸️ Pausa Registrazione")
@@ -171,6 +182,19 @@ class MeetingApp:
             self.root.clipboard_clear()
             self.root.clipboard_append(text)
             self.update_status("Testo copiato negli appunti.")
+
+    def load_input_devices(self):
+        try:
+            self.input_devices = get_input_devices()
+            devices = list(self.input_devices.keys())
+            if not devices:
+                raise RuntimeError("Nessun dispositivo di input trovato.")
+            self.device_var.set(devices[0])
+            self.device_dropdown["values"] = devices
+        except Exception as e:
+            self.device_var.set("Errore")
+            self.device_dropdown["values"] = []
+            self.update_status(f"Errore nel caricamento dei dispositivi: {e}", error=True)
 
     def load_ollama_models(self):
         try:
